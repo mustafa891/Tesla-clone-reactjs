@@ -11,7 +11,6 @@ import { auth } from "../firebase";
 import { login } from "../../features/userSlice";
 
 
-
 const Signup = () =>{
 
     const [email, setEmail] = useState('');
@@ -20,6 +19,17 @@ const Signup = () =>{
     const [lname, setLname] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+     // to check if user already logged in or not 
+      useEffect(() => {
+        auth.onAuthStateChanged((userAuth) => {
+          if(userAuth) {
+            setUser(userAuth)
+          }else {
+            setUser(null);
+          }
+        })
+      }, [])
 
     const signUp = (e) =>{
         e.preventDefault();
